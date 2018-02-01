@@ -14,15 +14,27 @@ public class MyActivityManager  implements InvocationHandler{
     public Object orignal ;
 
     public Class<?> getOrignalClass() throws ClassNotFoundException {
-        return Class.forName("android.app.ActivityManagerNative");
+        return Class.forName("android.app.ActivityManager");
     }
 
     @Override
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 
-        Log.d(TAG, "before method called:" + method.getName());
+        Log.e(TAG, "========before method called:" + method.getName());
+        if (args != null) {
+            for (Object obj : args) {
+                Log.e(TAG, "arg:" + obj);
+            }
+            try {
+                if (args[2].toString().contains("LoginActivity")) {
+                    return 23344;
+                }
+            } catch (Exception e) {
+
+            }
+        }
         final Object obj =  method.invoke(orignal, args);
-        Log.d(TAG, "after method called:" + method.getName());
+        Log.e(TAG, "-===========after method called:" + method.getName());
         return obj;
     }
 }
